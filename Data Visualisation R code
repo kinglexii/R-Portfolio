@@ -1,0 +1,150 @@
+library(ggplot2)
+library(tidyverse)
+install.packages("ggplotly")
+#mpg frame comes with ggplot
+
+ggplot(data = mpg)
+str(mpg)
+dim(mpg)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, colour = class))
+#ggplot2 will only use six shapes at a time
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class), colour = "blue")#alpha is for transparency
+#Here, the color doesn't convey information about a variable, 
+#but only changes the appearance of the plot
+ #alpha is for transparency
+
+ggplot(data = mpg) + 
+  geom_violin(mapping = aes(x = displ, y = hwy, alpha = class))
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class), colour = "blue")
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = class, alpha = hwy,
+                           shape = class, colour= displ < 5))+ 
+  facet_wrap(~ class, nrow = 3)
+            
+
+#facets
+#put the variable with more unique levels in the columns
+?facet_wrap
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 4)
+
+#to facet with two variables 
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ cyl)
+
+#to facet not in row or column dimensions
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(. ~ cyl)
+
+#facetting on a continuous variable
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = cyl)) + 
+  facet_grid(. ~ cty)
+
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+
+##geometric objects
+#Every geom function in ggplot2 takes a mapping argument. 
+#However, not every aesthetic works with every geom
+
+# left
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+# right
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+?geom_smooth
+
+#using different linetypes to represent data
+#cant map a continuous variable to linetype
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = cty, y = hwy, linetype = displ))
+
+#geom smoothe uses one geomobject to represent multiple rows of data
+#set the group aesthetic to a categorical variable to draw multiple objects
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+
+ggplot(data = mpg) +
+  geom_smooth(
+    mapping = aes(x = displ, y = hwy, color = drv),
+    show.legend = TRUE
+  )
+
+#To display multiple geoms in the same plot, add multiple geom functions
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+
+#this introduces duplication into the code. 
+#To avoid forgetting to update a  variable in two places, pass mappings to ggplot
+#ggplot passes the mappings to each geom in the graph
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()+
+  ggtitle(label  = ("NEW COVID CASES PER 1000 PEOPLE IN AFRICA"))
+
+#geom function mappings are treated as local mappings for the layer. 
+#ggplot extends or overwrites the global mappings for that layer only. 
+#This helps to display different aesthetics in different layers.
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth()
+
+#there can be different data in each layer
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = TRUE)
+
+# se Displays confidence interval around smooth
+
+#statistical Transformations
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))
+
+
+#You can generally use geoms and stats interchangeably
+ggplot(data = diamonds) + 
+  stat_count(mapping = aes(x = cut))
+
+#Adding labels(ggplot::labs)
+# The plot title appears at the top-left, with the subtitle
+# display in smaller text underneath it
+p + labs(title = "New plot title")
+p + labs(title = "New plot title", subtitle = "A subtitle")
+
+# The caption appears in the bottom-right, and is often used for
+# sources, notes or copyright
+p + labs(caption = "(based on data from ...)")
+
+# The plot tag appears at the top-left, and is typically used
+# for labelling a subplot with a letter.
+p + labs(title = "title", tag = "A")
+
+# If you want to remove a label, set it to NULL.
+p +
+  labs(title = "title") +
+  labs(title = NULL)
+
+
+#use to convert several columns in a dataset 
+mutate_if(is.double,as.numeric)
