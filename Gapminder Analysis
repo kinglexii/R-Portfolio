@@ -1,0 +1,105 @@
+---
+title: "Gapminder Exploratory Analysis"
+author: "Alexandra Akaakar"
+date: "7/30/2021"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE , message = FALSE, warning = FALSE)
+
+```
+
+# About this Project
+
+Gapminder's  mission is to fight devastating ignorance with a fact-based worldview everyone can understand.  
+Gapminder uses reliable data to develop easy to understand teaching materials to rid people of their misconceptions.  
+For more information go to https://www.gapminder.org/
+
+This is an analysis of the gapminder dataset included in R
+
+
+
+```{r}
+#importing libraries
+
+library(gapminder) #the datsaet
+library(tidyverse) 
+
+```
+
+### Summary of the Gapminder dataset and the names of columns
+
+```{r}
+str(gapminder)
+summary(gapminder)
+names(gapminder)
+
+```
+There are 6 columns and 1704 rows in the main gapminder dataset. They contain the values of life expectancy, GDP per Capita and population for 142 countries from  all five continents measured between 1952 and 2007.  
+
+###Dataset And Variable Creation
+
+By filtering Key years, we can see how the observations changed for each country.
+
+the min. median and max years are 1952, 1980 and 2007 so we'll create a new dataset with only those years to work with.
+
+The large variables for population have to be reduced. The population will be divided by 1,000,000. The new value pop_per_mil will be used in further analysis,
+
+```{r, echo=TRUE}
+#filtering data by years
+data <- gapminder %>%
+  filter(year == 1952| year==1980 |year == 2007) 
+
+
+#summary and head of new dataset
+summary(data)
+head(data)
+
+#checking how many unique values are in the dataset
+data$year %>% unique()
+data$country %>% n_distinct()
+data$continent %>% unique()
+
+```
+
+After filtering , the year country and continent are checked for unique values. There are no observations for the median year (1980)
+
+
+
+## Exploring the data
+
+### LifeExpectancy in 1952 and 2007
+
+```{r ,fig.cap = "fig. 1: Life Expectancy in 1952 and 2007"}
+ggplot(data, aes(x = lifeExp, fill = continent)) +
+  geom_histogram(bins = 40, position = "stack")+
+  facet_wrap(continent~year)
+```
+
+The histogram charts the frequency of life expectancy values for countries in 1952 and 2007 by continent. in 2007 life expectancy had risen across continents.
+```{r}
+
+data2007 <- data %>% filter(year == 2007)
+data1952 <- data %>% filter (year == 1952)
+
+```
+
+```{r}
+data1952  %>% group_by(continent) %>% arrange(desc(lifeExp))
+```
+
+## life expectancy and gdp
+
+```{r}
+ggplot(data, aes(x = lifeExp, y = gdpPercap,colour = continent)) +
+  geom_point(shape =6, size = 9)+
+  facet_wrap(continent~year)+
+  ylim(0,30000)
+```
+
+```{r}
+#data %>% 
+ # ggplot(aes(x = continent, y = lifeExp)) +
+```
+
+
