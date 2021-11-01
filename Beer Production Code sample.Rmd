@@ -1,0 +1,279 @@
+---
+title: "Beer Production data"
+author: "Alexandra Akaakar"
+output:
+  html_document:
+    css: "style.css"
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE , message = FALSE, warning = FALSE)
+```
+
+## About This Project
+
+This is an analysis of Beer Production data gotten from the Alcohol and Tobacco Tax and Trade Bureau.
+
+The Datasets include information on:
+State-level beer production by year 
+
+Number of brewers by production size by year 
+
+Monthly beer stats aggregated across the US 
+
+Some considerations:
+
+A barrel of beer for this data is 31 gallons.
+
+Most data is in barrels removed/taxed or produced.
+
+Removals = "Total barrels removed subject to tax by the breweries comprising the named strata of data". Essentially how much was produced and removed for consumption.
+
+
+```{r}
+#load libraries
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(hrbrthemes)
+library(magrittr)
+library(remotes)
+```
+
+
+```{r}
+#Get data
+brewing_materials <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewing_materials.csv')%>%
+mutate(date = ymd(paste(year, month, 1)))
+#%>% filter(year == 2017)
+
+beer_taxed <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_taxed.csv') 
+#%>% filter(year == 2017)
+
+
+brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewer_size.csv') 
+#%>% filter(year == 2017)
+
+
+beer_states <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv') 
+#%>% filter(year == 2017)
+
+```
+ 
+ delete these later
+```{r,include=FALSE}
+#checking dimensions
+dim(brewing_materials)
+dim(beer_taxed)
+dim(brewer_size)
+dim(beer_states)
+```
+
+```{r,include=FALSE}
+#summary and column names
+
+colnames(brewing_materials)
+summary(brewing_materials)
+
+
+colnames(beer_taxed)
+summary(beer_taxed)
+
+
+colnames(brewer_size)
+summary(brewer_size)
+
+colnames(beer_states)
+summary(beer_states)
+
+```
+
+## Brewing Materials dataset Analysis
+
+What type of materials are used in US Beer products?
+
+The Brewing Materials dataset contains information on the materials that went into beer produced in the united states 
+the column names in the dataset are:
+```{r}
+#summary and column names
+colnames(brewing_materials)
+
+
+#checking dimensions
+dim(brewing_materials)
+
+```
+
+
+material_type shows the number of pounds of Hops vs Grains that went into Beer production.
+Type expands on material_type.
+
+month_current shows how many barrels of Beer were produced for this year/month. Month_prior_year shows how many barrels were produced at the same period last year.
+
+ytd_current shows the cumulative production in barrels for the current year.  ytd_prior_year shows the cumulative production in barrels for same period last year.
+
+
+```{r}
+
+
+grain_nongrain_input <- as.tibble( 
+  brewing_materials %>% group_by(year,month,material_type,type)%>% summarise(sum(month_current))%>%
+    rename(Monthlyamt = `sum(month_current)`)
+  ) 
+```
+
+
+```{r}
+## Boxplot of materils
+grain_nongrain_input %>% ggplot(mapping = aes(Monthlyamt,month),fill = type )+
+  geom_boxplot(mapping = NULL,
+  data = NULL,
+  stat = "boxplot",
+  position = "dodge",
+  outlier.colour = "#3366FF",
+  outlier.color = NULL,
+  outlier.fill = NULL,
+  outlier.shape = 19,
+  outlier.size = 1.5,
+  outlier.stroke = 0.5,
+  outlier.alpha = NULL,
+  notch = TRUE,
+  notchwidth = 0.5,
+  varwidth = TRUE,
+  na.rm = FALSE,
+  orientation = NA,
+  show.legend = NA,
+  inherit.aes = TRUE) +
+  facet_wrap(~year)+
+  coord_flip()
+  
+```
+```{r}
+materialcountyear <- as.tibble( 
+  brewing_materials %>% group_by(year,material_type)%>% summarise(sum(year_current))
+)
+```
+
+```{r}
+ggplot(brewing_materials, aes(type,fill = material_type)) +
+  fct_reorder(material_type, tvhours)+
+  geom_bar()+
+  coord_flip()+
+  facet_wrap(~year)
+
+#need to relevel factors and add
+
+```
+
+
+```{r}
+colSums(sapply(brewing_materials, is.na))
+
+brewing_materials <- as.data.frame(unclass(brewing_materials), stringsAsFactors = TRUE)
+
+str(brewing_materials)
+
+```
+
+```{r}
+class(brewing_materials)
+summary(brewing_materials)
+
+#The %<>% operator pipes and reassigns, which is very useful for keeping data cleaning and transformation simple. it requires the maagrittr function
+#brewing_materials[1:2] %<>% lapply(function(brewing_materials) as.character(as.factor(brewing_materials)))
+
+```
+
+
+The Brewing Material dataset covers Material used in Beer Production from 2008 to 2017.
+It has 144 rows and 10 columns. YTD_current and YTD_prior_year have 144 missing observations.
+
+
+
+```{r}
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+)
+
+
+brewing_materials %>% mutate() <- factor(brewing_materials$month, levels = month_levels)
+```
+
+
+
+
+
+dataset numerical distribution:
+```{r}
+
+materialnumbers <- brewing_materials %>% select(where(is.numeric))
+
+materialtype <- brewing_materials %>% select(c(year, month ,material_type,type))
+
+str(materialnumbers)
+str(materialtype)
+```
+
+
+```{r}
+materialnumbers %>% ggplot(x = month) +
+  geom_col(mapping = aes( y = (month_current), 
+           position = 'stack') + 
+  facet_wrap( ~ year)
+
+ggplot(data = brewing_materials) + 
+  geom_col(mapping = aes(x = month, y = (month_prior_year/1000000), fill = month)) + 
+  facet_wrap(~year)
+
+ggplot(data = brewing_materials) + 
+  geom_col(mapping = aes(x = month,y = (ytd_current/1000000)), fill = month) + 
+  facet_wrap(~year)
+
+ggplot(data = brewing_materials) + 
+  geom_col(mapping = aes(x = (ytd_prior_year/1000000), y = month)) + 
+  facet_wrap(~year)
+
+```
+
+The distribution of the production numbers in the Beer_materials dataset are all right-skewed. The mean median and mode differ.
+
+```{r}
+
+BrewMatNum <- brewing_materials %>% select(month_current,month_prior_year,ytd_current,ytd_prior_year,year) %>% 
+filter(!is.na(ytd_current), !is.na(ytd_prior_year)) %>% group_by(year)
+
+do.call(cbind, lapply(BrewMatNum, summary))
+```
+
+```{r}
+<!-- ```{r,include=FALSE} -->
+<!-- p4 <- hist(brewing_materials, col="#F78181", xlab="Rent", main="Distribution of Rent") -->
+<!-- abline(v = mean(subset.rent$rent_mean), col = "blue", lwd = 2, lty="dashed") -->
+<!-- abline(v = median(subset.rent$rent_mean), col = "green", lwd = 2, lty="dashed") -->
+<!-- legend(x = c(4000, 3200), y = c(8000, 5500), legend=c("Mean", "Median"), col=c("blue","green"), cex=0.7,  -->
+<!--       lty="dashed", lwd=1, y.intersp = 3.8, x.intersp=3.5, xjust=-1.8) -->
+```
+
+material type analysis
+
+```{r}
+
+#materialtype <- brewing_materials %>% select(c(year, month ,material_type,type))
+head(materialtype)
+
+materialtype %>% ggplot(aes(month, material_type, fill = type)) +
+  geom_col()+
+  facet_wrap(~year)
+  coord_flip()
+
+```
+
+
+```{r}
+
+```
+
