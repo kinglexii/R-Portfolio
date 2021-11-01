@@ -273,7 +273,3 @@ materialtype %>% ggplot(aes(month, material_type, fill = type)) +
 ```
 
 
-```{r}
-
-```
-
