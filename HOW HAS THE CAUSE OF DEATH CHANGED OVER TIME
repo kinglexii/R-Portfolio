@@ -1,0 +1,106 @@
+---
+title: "Global Burden of Disease Study (GBD)"
+author: "Alexandra Akaakar"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE , message = FALSE, warning = FALSE)
+#libraries
+library(kableExtra)
+library(tidyverse)
+```
+This is an analysis of global cause of deaths from 1990 to 2017.  
+The Global Burden of Disease Study (GBD) is the most comprehensive worldwide observational epidemiological study to date.
+It describes mortality and morbidity from major diseases, injuries and risk factors to health at global, national and regional levels.  
+Mortality studies are important Because they enable the quantification of avoidable premature mortality,highlight key risk factors for disease and provide a quantifiable method to monitor Country Specific progress toward the Sustainable Development Goals.  
+The data used comes from a raw github repository.
+```{r,include=FALSE}
+#get data
+gbd <- read.csv("https://raw.githubusercontent.com/SurgicalInformatics/healthyr_book/master/data/global_burden_disease_cause-year-sex-income.csv")
+as_factor(gbd$cause)
+as_factor(gbd$sex)
+as_factor(gbd$income)
+```
+## Total Number of Deaths
+```{r}
+a <- gbd %>% 
+  group_by(year) %>% 
+  summarise("Deaths Per Million" = sum(deaths_millions))
+a%>%
+  kable(caption = "Recorded Global Deaths Per Million People Yearly")  %>%
+  kable_classic_2(full_width = T, html_font = "Cambria") %>% 
+  kable_paper("hover")
+```
+
+In this case study, the focus is on using Two variables (Country Income classification, sex)  to answer the question “How Do Global Cause of Deaths (deaths_millions) change over time (year)?”.  
+
+## How Has Cause of death Changed Over the Years?
+Making progress toward the United Nations 2030 Sustainable Development Goals requires access to quality data and information on causes of death. However,the causes of an estimated fifty million annual deaths in low- and middle-income countries remain unknown. analyzing how cause of death has changed over the years, could provide some insight into living conditions and data requirements for mortality models.
+
+```{r}
+gbd %>%  ggplot(mapping = aes(x = year, y = deaths_millions, fill = cause)) + 
+          geom_col( position = "dodge")+
+        labs(x = "Year", y = "Deaths Per Million")+
+        ggtitle("How Has Cause of Death Changed Over the Years?")
+```
+
+From 1990 to 2017,there has been an increase in deaths from non-communicable diseases and a decrease in deaths from communicable diseases. Deaths from Injuries have remained relatively stable. Does this trend apply to countries by income level? 
+
+## Cause of Death By Income
+
+```{r}
+gbd %>% 
+  ggplot(mapping = aes(x = year, y = deaths_millions, colour = cause, width = 0.7)) +
+      geom_line(alpha = 3, size = 2)+
+      facet_wrap(~income)+
+      ylab("Death Per Millions")+
+  ggtitle("Cause of Death By Country Income Classification")+
+  xlab("Year")+
+  theme_dark() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(size=12),
+        axis.text.x = element_text(size= 13, color = 'black'),
+        axis.text.y = element_text(size = 13, color = 'black'),
+        axis.title.x = element_text(size= 14, color = 'black'),
+        axis.title.y = element_text(size = 14, color = 'black'))
+```
+Deaths from non-communicable diseases increased in countries at all four income classifications. Upper-middle and High income countries entered the 90's with already high rates of non-communicable disease death. The Lower-Middle Income countries quickly caught up. The Low Income Countries remain without the luxury of high rates of non-communicable disease death. Low-income death from Communicable diseases remained higher than death from non-communicable diseases through the 90's and into the 2000's.
+
+```{r}
+gbd %>% 
+  ggplot(aes(year, deaths_millions, colour = cause)) +
+    geom_point(alpha = 3, size = 3)+
+  facet_wrap(~sex)+
+  ylab("Deaths Per Million")+
+  theme_dark() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(size=12),
+        axis.text.x = element_text(size= 13, color = 'black'),
+        axis.text.y = element_text(size = 13, color = 'black'),
+        axis.title.x = element_text(size= 14, color = 'black'),
+        axis.title.y = element_text(size = 14, color = 'black'))
+```
+For Men and Women, over time the cause of death from non-communicable diseases has increased. 
+
+```{r}
+gbd %>% 
+  ggplot(aes(year, deaths_millions, colour = income)) +
+    geom_line(alpha = 3, size = 2)+
+  facet_wrap(~sex~cause)+
+  theme_dark() +
+  labs(x = "Year", y = "Deaths Per Million")+
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(size=12),
+        axis.text.x = element_text(size= 13, color = 'black'),
+        axis.text.y = element_text(size = 13, color = 'black'),
+        axis.title.x = element_text(size= 14, color = 'black'),
+        axis.title.y = element_text(size = 14, color = 'black'))
+```
+
+when cause of death is broken down by Sex and Income, The reduction in deaths by communicable disease and the increase in deaths by Non-communicable disease is seen at all income levels for men and women.
+
+The answer to the question 'How did the cause of death change over time with Income and Gender?'.
+over time the cause of death changed from communicable to non-communicable diseases for men and women in countries at all levels of income
+
+# SUMMARY
+This was a preliminary data Visualisation for a Mortality Study. Country specific studies on Life expectancy by Disease Risk Factors would be the next step for this project.
