@@ -1,0 +1,31 @@
+---
+title: "Spatial Data: Analysis of haunted house data"
+author: "Alexandra Akaakar"
+output: html_document
+date: "2024-02-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE , message = FALSE, warning = FALSE)
+```
+
+
+```{r setup, include=FALSE}
+#libraries
+library(kableExtra)
+library(tidyverse)
+```
+
+ exploring a spooky dataset: a compilation of Haunted Places in the United States. The dataset was compiled by Tim Renner, using The Shadowlands Haunted Places Index, and shared on data.world
+ 
+```{r}
+rawdata <- 
+  read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-10-10/haunted_places.csv")
+
+```
+
+
+```{r}
+
+```
+

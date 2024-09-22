@@ -1,0 +1,147 @@
+---
+title: "maps and spatial data"
+author: "Alexandra Akaakar"
+date: "10/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 7, fig.height = 7)
+loadLibs = function(libs="RgoogleMaps"){
+  for (l in libs) 
+    suppressMessages(suppressWarnings(library(l,character.only =TRUE, quietly=TRUE)))
+}
+loadLibs("RgoogleMaps")
+loadLibs("loa")
+loadLibs("latticeExtra")
+loadLibs("ggmap")
+library(ggplot2)
+library(maps)
+library(mapdata)
+
+
+# bingAPIkey = scan("C:/Users/loecherm/Dropbox/stuff/bingAPIkey.txt",what="")
+# bingAPIkey = scan("C:/DatenLoecher/Dropbox/stuff/bingAPIkey.txt",what="")
+# googleAPIkey = scan("C:/DatenLoecher/Dropbox/stuff/googleAPIkey.txt",what="")
+# dataDir="H:/DropboxHWR/InternationalVisits/Aalborg2016/Teaching/MapsInR/ForStudents/data/"
+# OFFLINE=TRUE # use previously downloaded maps/data
+# set.seed(123)
+# if (OFFLINE) load("data/allTiles.rda")
+```
+
+
+```{r}
+library(RCurl)
+library(RJSONIO)
+library(plyr)
+```
+first we Build a URL to access the API:
+
+```{r}
+url <- function(address, return.call = "json", sensor = "false") {
+  root <- "http://maps.google.com/maps/api/geocode/"
+  u <- paste(root, return.call, "?address=", address, "&sensor=", sensor, sep = "")
+  return(URLencode(u))
+}
+
+```
+
+
+to parse results
+
+```{r}
+geoCode <- function(address,verbose=FALSE) {
+  if(verbose) cat(address,"\n")
+  u <- url(address)
+  doc <- getURL(u)
+  x <- fromJSON(doc,simplify = FALSE)
+  if(x$status=="OK") {
+    lat <- x$results[[1]]$geometry$location$lat
+    lng <- x$results[[1]]$geometry$location$lng
+    location_type  <- x$results[[1]]$geometry$location_type
+    formatted_address  <- x$results[[1]]$formatted_address
+    return(c(lat, lng, location_type, formatted_address))
+    Sys.sleep(0.5)
+  } else {
+    return(c(NA,NA,NA, NA))
+  }
+}
+```
+
+
+test your setup with an address
+
+```{r}
+address <- geoCode("The White House, Washington, DC")
+address
+```
+
+
+
+```{r, echo=TRUE, eval=!OFFLINE, include=FALSE}
+#par(pty="s")
+#map1 <- GetMap(markers = paste0(
+#"&markers=color:blue|label:S|40.702147,-74.015794",
+#"&markers=color:green|label:G|40.711614,-74.012318",
+#"&markers=color:red|color:red|label:C|40.718217,-73.998284"),
+#center=NULL,destfile = "staticMaps/MyTile1.png",size=c(640,640),
+#maptype = "terrain", API_console_key=googleAPIkey)
+#PlotOnStaticMap(map1)
+```
+```{r}
+w2hr <- map_data("world2Hires")
+w2hr
+usa <- map_data("usa")
+
+dim(usa)
+```
+
+ database structure
+The structure of those data frames
+These are pretty straightforward:
+
+long is longitude. Things to the west of the prime meridian are negative.
+lat is latitude.
+order. This just shows in which order ggplot should “connect the dots”
+region and subregion tell what region or subregion a set of points surrounds.
+group. This is very important! ggplot2’s functions can take a group argument which controls (amongst other things) whether adjacent points should be connected by lines. If they are in the same group, then they get connected, but if they are in different groups then they don’t.
+Essentially, having to points in different groups means that ggplot “lifts the pen” when going between them. 
+ 
+to create a map with with no line color and a black fill use geom_polygon()
+
+```{r}
+
+usa <- map_data("usa") # we already did this, but we can do it again
+ggplot() + geom_polygon(data = usa, aes(x=long, y = lat, group = group)) + 
+  coord_fixed(1.3)
+
+
+```
+
+```{r}
+ggplot() + 
+  geom_polygon(data = usa, aes(x=long, y = lat, group = group), fill = NA, color = "red") + 
+  coord_fixed(1.3)
+```
+
+```{r}
+map_data("state")
+```
+
+```{r}
+mapImageData1 <- get_map(location = c(lon = -0.016179, lat = 51.538525),
+    color = "color",
+    source = "google",
+    maptype = "satellite",
+    zoom = 17)
+ 
+ggmap(mapImageData1,
+    extent = "device",
+    ylab = "Latitude",
+    xlab = "Longitude")
+```
+
+```{r}
+?register_google
+```
+
