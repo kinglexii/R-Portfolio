@@ -1,0 +1,15 @@
+---
+title: "Climate Data Analysis in R"
+output: html_document
+date: "2024-09-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+There are a range of resources for analysing spatial data with R,
+
+
+A major pleasure in working with spatial data is their visualisation
