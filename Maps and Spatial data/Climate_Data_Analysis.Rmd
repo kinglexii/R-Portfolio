@@ -9,8 +9,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-There are a range of resources for analysing spatial data with R, A major pleasure in working with spatial data is their visualisation. This project uses open source spatial data to inform data visualisationshttps://github.com/kinglexii/R-Portfolio.git
+There are a range of resources for analysing spatial data with R, A major pleasure in working with spatial data is their visualisation. This project uses open source spatial data to inform data visualisations
+
 ```{r}
-data <- read.csv('https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalLandTemperaturesByMajorCity.csv')
+
+pacman::p_load(ggmap,maps)
+
 ```
 
