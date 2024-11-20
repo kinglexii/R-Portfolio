@@ -1,0 +1,88 @@
+---
+title: "CDRL Internal Dashboard"
+author: "Alexandra Akaakar"
+date: '2023-02-13'
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE , message = FALSE, warning = FALSE)
+
+```
+
+```{r}
+setwd("//office/dfs/Philanthropy-Private/akaakara/MyData/My Documents/aRsenal/ShinyR/")
+
+```
+
+
+```{r}
+# Ensures the package "pacman" is installed
+if (!require("pacman")) install.packages("pacman")
+#install.packages("pacman","//off-data-gr6.office.ads.gvsu.edu/GR6VOL3/PHILANTHROPY/PRIVATE/AKAAKARA/MyData/My Documents/R/win-library/4.1/pacman")
+#library(pacman)
+```
+
+```{r}
+#set wd
+#setwd("~/GitHub/aRsenal-git/shiny app projects/dashboard project")
+#C:\Users\Optimus\Documents\GitHub\aRsenal-git\shiny app projects\dashboard project
+```
+
+```{r}
+#pacman::p_load(flexdashboard,ggplot2,readr,highcharter,dplyr)
+```
+
+Column {data-width=600}
+-------------------------------------
+
+
+### insight 1
+
+```{r}
+```
+
+
+Column {data-width=600}
+-------------------------------------
+
+
+### insight 2
+
+```{r}
+```
+
+
+Column {data-width=600}
+-------------------------------------
+
+
+
+### insight 3
+
+```{r}
+```
+
+Column {data-width=600}
+-------------------------------------
+
+
+
+### insight 4
+
+```{r}
+```
+
+Column {data-width=600}
+-------------------------------------
+
+
+### insight 5
+
+```{r}
+```
+
+### tbd
+
+```{r}
+```

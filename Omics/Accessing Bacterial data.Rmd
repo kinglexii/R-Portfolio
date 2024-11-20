@@ -1,0 +1,101 @@
+---
+title: "Accessing bacterial data"
+author: "Alexandra Akaakar, BSc. MSc"
+date: "2024-09-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+In recent years, the field of bacterial genomics has experienced rapid growth and advancement. The availability of open-source bacterial omics data has played a crucial role in this progression by providing researchers with valuable resources for studying various aspects of bacteria, including their genomic makeup, transcriptomics, proteomics, and metabolomics. 
+
+This guide aims to provide an overview of the most accessible and comprehensive sources of open-source bacterial omics data available today. By following this guide, you will be able to access these resources effectively and efficiently, ultimately contributing to your research in the field of bacterial genomics.
+
+```{r}
+
+pacman::p_load("seqinr") #retrieve sequence data from NCBI directly from R
+
+```
+
+Retrieving genome sequence data using SeqinR
+
+```{r}
+# Show available databases:
+  seqinr::choosebank()
+```
+
+
+```{r}
+getncbiseq <- function(accession)
+  {
+     require("seqinr") # this function requires the SeqinR R package
+     # first find which ACNUC database the accession is stored in:
+     dbs <- c("genbank","refseq","refseqViruses","bacterial")
+     numdbs <- length(dbs)
+     for (i in 1:numdbs)
+     {
+        db <- dbs[i]
+        choosebank(db)
+        # check if the sequence is in ACNUC database 'db':
+        resquery <- try(query(".tmpquery", paste("AC=", accession)), silent = TRUE)
+        if (!(inherits(resquery, "try-error")))
+        {
+           queryname <- "query2"
+           thequery <- paste("AC=",accession,sep="")
+           query(`queryname`,`thequery`)
+           # see if a sequence was retrieved:
+           seq <- getSequence(query2$req[[1]])
+           closebank()
+           return(seq)
+        }
+        closebank()
+     }
+     print(paste("ERROR: accession",accession,"was not found"))
+  }
+```
+
+```{r}
+# Load SeqinR package if not already loaded
+library("seqinr", quietly = TRUE)
+
+getncbiseq <- function(accession) {
+  dbs <- c("genbank", "refseq", "refseqViruses", "bacterial")
+  
+  # Loop through all databases and find the first match
+  for (db in dbs) {
+    choosebank(db)
+    
+    tryCatch({
+      resquery <- query(".tmpquery", paste("AC=", accession))
+      
+      if (!is.null(resquery$req[[1]])) {
+        # Retrieve the sequence and close the database connection
+        seq <- getSequence(resquery$req[[1]])
+        
+        stopifnot(!is.null(seq), "No sequence retrieved.")
+        
+        return(character(string = as.character(seq)))  # Return sequence as character type
+      }
+    }, warning = function(w) {
+      closebank()
+      
+      if (inherits(w, "try-error")) {
+        print(paste("ERROR: accession", accession, "was not found."))
+      } else {
+          w
+      }
+    })
+  }
+}
+```
+
+
+```{r}
+#test with the dengue fever genome
+dengueseq <- getncbiseq("NC_001477")
+
+```
+
