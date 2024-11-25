@@ -1,0 +1,57 @@
+---
+title: "job searching in R"
+author: "Alexandra Akaakar, BSc. MSc"
+date: "2024-10-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(maps)
+```
+## this script is about how we can use webscraping to simplify job searching. I ultimately want to analyze the positions and see which skills are needed for a  position.
+
+I am only interested in Job postings from Research universities, so first i go to the research universities in the united states wikipedia page
+
+```{r}
+
+researchuniwikiurl <- "https://en.wikipedia.org/wiki/List_of_research_universities_in_the_United_States"
+
+researchunihtml <- read_html(researchuniwikiurl) %>% html_text()
+
+```
+
+scraping the tables from the wikipedia page was taking too much time. plan B. create csv file from wiki page table was more time efficient.
+
+the aim is to leverage the R world city database from the r maps package to pinpoint cities i would like to work in
+```{r}
+researchuniversitiesUSA <- read_csv("C:/Users/lexii/Documents/GitHub/R-Portfolio/R for JobHUnting/researchuniversitiesUSA.csv")
+
+
+USAcities <- world.cities %>% as.data.frame() %>% filter(country.etc == "USA")
+
+
+
+
+
+```
+
+
+to get started webscraping i need the ur; of the page i want to scrape
+
+```{r}
+indeedjobs <- read_html("https://www.indeed.com/?from=gnav-jobsearch--indeedmobile")
+
+```
+```{r}
+
+largerthangr <- USAcities %>% filter(pop > USAcities$pop[name == "Grand Rapids"])
+
+
+```
+
