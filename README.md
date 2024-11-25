@@ -9,7 +9,7 @@ So buckle up and get ready to explore the fascinating world of data with me!
 
 
 #MAPS AND SPATIAL DATA
-diving into open sourse geographical information systems
+diving into open source geographical information systems
 
 
 
