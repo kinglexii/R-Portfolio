@@ -33,5 +33,5 @@ this will be fun
 
 
 
-#FINANCIAL ANALYSIS AND MATHEMTICS
+#FINANCIAL ANALYSIS AND MATHEMATICS
 Mathematical exploration of the financial universe
