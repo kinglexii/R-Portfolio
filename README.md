@@ -20,7 +20,7 @@ exploring the sexy world of open preteomic,metabolomic, transcriptomic and whate
 
 
 
-#RFORJOBHUNTIN
+#RFORJOBHUNTING
 Data engineering and web scraping to make job searching easier for the R programmer
 
 
