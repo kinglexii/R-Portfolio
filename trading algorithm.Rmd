@@ -1,0 +1,107 @@
+---
+title: "Creating a Trading Algorithm in R: Step-by-Step Instructions"
+author: "Alexandra Akaakar, BSc. MSc"
+date: "2024-10-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+lntroduction: This guide will walk you through the process of creating a basic trading algorithm using R, focusing on stock market data analysis and decision making. The steps below assume that you have a basic understanding of R programming and some knowledge of financial markets and technical analysis. Let's get started!
+Step 1: Install Required Packages To create a trading algorithm in R, we need to install several packages. Open your R console or RStudio, and run the following commands:
+
+
+
+```{r}
+
+install.packages(c("quantmod", "tidyverse", "lubridate"))
+library(quantmod)
+library(tidyverse)
+library(lubridate)
+
+```
+
+
+Step 2: Load Required Packages and Data Load the installed packages and import the historical stock data for your chosen company or ETF. Replace TICKER with the actual ticker symbol of the asset you want to analyze. For example, if you're interested in Apple Inc., use "AAPL" as the TICKER:
+
+```{r}
+#Replace 'TICKER' with your desired stock ticker symbol
+getSymbols("TICKER", src = "yahoo", auto.assign = TRUE)
+
+```
+
+
+Step 3: Analyze Historical Data and Define Indicators Explore the historical data to identify relevant technical indicators that can be used for decision-making in your trading algorithm. Some common indicators include moving averages, relative strength index (RSI), and Bollinger Bands. Use the following code as a starting point:
+
+
+```{r}
+# Define function to calculate SMA (Simple Moving Average)
+sma <- function(x, n = 20) {
+  rollapply(x, width = n, mean, align = "right", fill = NA)
+}
+
+# Calculate RSI for the stock data
+rsi_n <- 14
+TICKER <- TICKER %>%
+  mutate(rsi = coredata(RSI(Ad.close, n = rsi_n)))
+
+# Plot SMA and RSI
+autoplot(TICKER[, c("TICKER.Close", "rsi")]) +
+  labs(title = paste("SMA (20) & RSI (", rsi_n, ") for TICKER"),
+       x = NULL, y = "Price/RSI") +
+  theme_minimal()
+
+```
+
+Step 4: Define Trading Rules and Strategy Based on the technical indicators you've chosen, define your trading rules. For example, you might decide to buy when a stock's price crosses above its SMA (20) and RSI is below 70; or sell short when the price falls below both the lower Bollinger Band and an SMA (50). Here's an example of how you can define simple trading rules:
+
+```{r}
+# Define buy/sell signals based on SMA & RSI crossings
+TICKER$buy_signal <- as.integer(TICKER$rsi > 70)
+TICKER$sell_signal <- as.integer(TICKER$rsi < 30)
+
+# Plot buy/sell signals
+autoplot(TICKER[, c("TICKER.Close", "buy_signal", "sell_signal")]) +
+  labs(title = paste("Buy & Sell Signals for TICKER"),
+       x = NULL) +
+  theme_minimal()
+
+
+```
+
+
+Step 5: Backtest and Optimize Your Strategy Use the performaceAnalytics package to backtest your trading strategy using historical data. This will help you evaluate its performance and make necessary adjustments. Here's an example of how to perform a basic backtest:
+
+```{r}
+
+# Install and load 'performanceAnalytics' package
+install.packages("performanceAnalytics")
+library(performanceAnalytics)
+
+# Backtest the trading strategy using historical data
+strategy <- function(x, buy = 1, sell = -1) {
+  positions <- rep(0, length(x))
+  for (i in 2:length(x)) {
+    if (x[i] > x[i - 1] & TICKER$buy_signal[i] == 1) {
+      positions[i] <- buy
+    } else if (x[i] < x[i - 1] & TICKER$sell_signal[i] == 1) {
+      positions[i] <- sell
+    } else {
+      positions[i] <- positions[i - 1]
+    }
+  }
+  return(positions)
+}
+
+# Backtest the trading strategy and plot results
+portfolio <- Portfolio(strategy = strategy, weights = c(0.5, 0.5), H = TICKER$Close)
+returns <- Return.calc(portfolio, method = "simple")
+autoplot(Returns(returns)) + labs(title = paste("Backtest Results for TICKER"))
+
+```
+
+Step 6: Monitor and Refine Your Strategy Continuously monitor your trading strategy's performance using live data. Make adjustments as needed based on market conditions, new indicators, or other factors that may impact the effectiveness of your strategy. 
+
+In conclusion, this is a basic outline for creating a simple stock trading algorithm in R. You can build upon these steps to create more complex strategies and optimize their performance over time.

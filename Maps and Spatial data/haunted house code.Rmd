@@ -24,8 +24,20 @@ rawdata <-
 
 ```
 
+look into the head of the dataset
+```{r}
+ head(rawdata)
+```
 
 ```{r}
+str(rawdata)
+```
+```{r}
+
+summary(rawdata)
 
 ```
+
+
+the summary and character tell us that the right datatypes
 
