@@ -1,6 +1,6 @@
 baseurl: /
 languageCode: en-US
-title: A Hugo website
+title: The Rose
 theme: hugo-lithium
 ignoreFiles:
   - \.Rmd$

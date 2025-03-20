@@ -3,7 +3,7 @@
     "path": "~/GitHub/R-Portfolio/TheRose/hugo.toml",
     "project_path": "hugo.toml",
     "type": "toml",
-    "hash": "790629491",
+    "hash": "3138879979",
     "contents": "",
     "dirty": false,
     "created": 1726267704536.0,
@@ -11,14 +11,16 @@
     "relative_order": 3,
     "properties": {
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "2,17",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1726188877,
+    "lastKnownWriteTime": 1742046129,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1726188877,
+    "last_content_update": 1742046130083,
     "read_only": false,
     "read_only_alternatives": []
 }
