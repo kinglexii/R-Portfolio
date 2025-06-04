@@ -20,7 +20,7 @@
 
 ## set working directory for Mac and PC
 
-setwd(" ")    
+#setwd(" ")    
 
 ## ---------------------------
 
@@ -75,6 +75,7 @@ mi_tract_pop <- readxl::read_excel("//office.ads.gvsu.edu/dfs/Philanthropy-Data/
   separate(Label, into= c("Tract","County","State"), sep = ";")
 
 
+tract_shp_mi <- merge(mi_tract_pop , mi_tract_shp,.id = 'NAME')
 
 #select genesee county tract population, to specify the word boundary, use \\b at the start
 genesee_pop_acs <- mi_tract_pop %>% filter(str_detect(County, regex("\\bGenesee", ignore_case = TRUE)))%>% mutate(NAME = str_sub(Tract, 13,-1)) %>% as.data.frame() 
@@ -109,7 +110,8 @@ fig_1 <- plotly::ggplotly(usmajororadmap)
 geneseecensusblock <- michigancensusblockgroup %>% filter(COUNTYFP == '049')
 
 
-kentdata <-join_by()kentdata <- data %>% filter(NAMELSADCO== "Kent County")kentdata <- data %>% filter(NAMELSADCO== "Kent County")Tract
+kentdata <-join_by()
+kentdata <- data %>% filter(NAMELSADCO== "Kent County")kentdata <- data %>% filter(NAMELSADCO== "Kent County")Tract
 plot(kentdata$geometry)
 
 
