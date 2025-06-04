@@ -9,7 +9,7 @@ So buckle up and get ready to explore the fascinating world of data with me!
 
 
 #MAPS AND SPATIAL DATA
-diving into open sourse geographical information systems
+diving into open source geographical information systems
 
 
 
@@ -20,7 +20,7 @@ exploring the sexy world of open preteomic,metabolomic, transcriptomic and whate
 
 
 
-#RFORJOBHUNTIN
+#RFORJOBHUNTING
 Data engineering and web scraping to make job searching easier for the R programmer
 
 
@@ -33,5 +33,5 @@ this will be fun
 
 
 
-#FINANCIAL ANALYSIS AND MATHEMTICS
+#FINANCIAL ANALYSIS AND MATHEMATICS
 Mathematical exploration of the financial universe
