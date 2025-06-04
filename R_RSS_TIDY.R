@@ -67,9 +67,9 @@ print(head(articles))
 
 ## Not run:
 # Atom feed:
-RjouRnal <- tidyfeed("http://journal.r-project.org/rss.atom")
+RjouRnal <- tidyfeed("https://journal.r-project.org/rss.atom")
 # rss/xml:
 news_tbd<- tidyfeed("http://fivethirtyeight.com/all/feed")
 # jsonfeed:
-tidyfeed("https://daringfireball.net/feeds/json")
+firebal <- tidyfeed("https://daringfireball.net/feeds/json")
 ## End(Not run)
