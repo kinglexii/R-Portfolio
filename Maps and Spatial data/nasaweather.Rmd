@@ -1,0 +1,15 @@
+---
+title: "nasaweather"
+output: html_document
+date: "2025-05-20"
+---
+
+```{r}
+pacman::p_load("nasaweather")
+```
+
+```{r}
+borders <- as.data.frame(nasaweather::borders)
+plot(borders$geometry)
+```
+

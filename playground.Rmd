@@ -1,0 +1,72 @@
+---
+title: "Untitled"
+output: html_document
+date: "2025-02-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+staff2425 <- read_csv("C:/Users/akaakara/Downloads/169c3f32-4d7b-48cb-a96c-695d7123c16b.csv")
+
+diverse_teaching_staff24 <- read_csv("//office.ads.gvsu.edu/dfs/Philanthropy-Data/PROJECTS/Closed Complete/2024/KConnect - 2023 Dashboard Maintenance/2. Data/Non-Sensitive Data Files/Diverse Teaching Staff/2023-2024/input/diverse_teaching_staff24.csv")
+
+
+
+
+```
+
+
+```{r}
+#API's in r
+library(pacman)
+pacman::p_load('spotifyr',  # To access the API
+               'tidyverse', # Data wrangling and plots
+               'plotly',    # Interactive plots
+               'ggimage',   # Adding album covers to ggplot
+               'kableExtra',# Format tables
+               'httpuv',    # To be able to access the Spotify URL
+               'httr')      # In case you want to access the API w/o
+                            # the package
+
+
+```
+
+```{r}
+#copilot app for running tests
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(palmerpenguins)
+
+# Define UI
+ui <- fluidPage(
+    titlePanel("Penguin Species Data"),
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("species", "Select Species:", choices = unique(penguins$species))
+        ),
+        mainPanel(
+            plotOutput("speciesPlot")
+        )
+    )
+)
+
+# Define Server
+server <- function(input, output) {
+    output$speciesPlot <- renderPlot({
+        penguins_filtered <- penguins %>% filter(species == input$species)
+        
+        ggplot(penguins_filtered, aes(x = bill_length_mm, y = bill_depth_mm, color = island)) +
+            geom_point() +
+            labs(title = paste("Bill Measurements for", input$species))
+    })
+}
+
+# Run App
+shinyApp(ui = ui, server = server)
+
+```
+
