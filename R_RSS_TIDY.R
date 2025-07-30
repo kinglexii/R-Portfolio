@@ -47,7 +47,7 @@ library(tidyRSS)
 
 
 #Fetch and Parse the RSS Feed:
-rss_data <- tidyfeed("https://link-springer-com.ezproxy.gvsu.edu/search.rss?new-search=true&query=&facet-discipline=%22Mathematics%22&sortBy=newestFirst")
+rss_data <- tidyfeed("https://www.afdb.org/en/about-us/careers/current-vacancies/consultants/rss")
 
 # View the first few entries
 head(rss_data)
