@@ -1,0 +1,64 @@
+---
+title: "R4HIV"
+author: "Alexandra Akaakar, BSc. MSc"
+date: "2025-07-02"
+NOTE: Contributing to genomic HIV research using open source software and publically available resources
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+1. Bioinformatics analysis: Utilize publicly available datasets from sources like the National Center for Biotechnology Information (NCBI) or International HIV Sequence Database (IHSDB). You can perform bioinformatics analyses using open source software such as Python, R, or BioPython to analyze genomic data. This could involve identifying mutations, phylogenetic analysis, and drug resistance prediction.
+
+```{r}
+
+```
+
+
+2. Machine learning: Develop machine learning models for predicting drug resistance in HIV strains based on their genetic sequences. You can use open source datasets from sources like the IHSDB or NCBI to train your model and validate its performance. Frameworks such as TensorFlow, PyTorch, or scikit-learn can be used for this purpose.
+
+```{r}
+
+```
+
+
+3. Data visualization: Contribute to HIV research by creating interactive data visualizations using open source tools like Tableau Public, D3.js, or Plotly. These visualizations could help researchers and clinicians better understand the genomic data and its implications in drug resistance, transmission patterns, or disease progression.
+
+```{r} 
+DATAVIZ4HIV
+
+
+```
+
+
+4. Software development: Contribute to existing open source software projects related to HIV research, such as Nextflow for workflow management or Galaxy for bioinformatics analysis. You can also develop new tools specifically tailored to the needs of HIV researchers, which could be shared with the community through platforms like GitHub.
+
+```{r}
+
+```
+
+
+5. Collaborate on online communities: Participate in online forums and mailing lists dedicated to HIV research, such as BioSTAR or Biotechnology Forum. Share your knowledge, ask questions, and collaborate with other researchers to advance genomic HIV research.
+
+```{r}
+
+```
+
+
+6. Educational resources: Create educational materials like tutorials, blog posts, or videos that explain complex concepts in HIV genomics using open source software tools. This can help bridge the gap between researchers and clinicians who may not have a strong background in bioinformatics or computational biology.
+
+
+```{r}
+
+```
+
+Remember:
+always cite your sources and 
+follow best practices for data sharing and reproducibility when working with publically available resources. 
+
+By contributing to HIV research through open source software, MY INTENTION IS TO  help advance our understanding of this virus and contribute to the development of more effective treatments and prevention strategies.
+

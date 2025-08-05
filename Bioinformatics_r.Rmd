@@ -8,4 +8,12 @@ date: "2024-09-14"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Biological Data Analysis in R.
+Biological Data Analysis in R. the Aim of this is to use R to advance the use of biomedical data, information, and knowledge for scientific inquiry, problem-solving, and decision making.Biomedical Informatics is an area of study within the Division of Medical Sciences.
+
+
+```{julia}
+
+
+
+```
+
