@@ -77,22 +77,31 @@ firebal <- tidyfeed("https://daringfireball.net/feeds/json")
 
 When exploring RSS technology with the R programming language, a nice end product to have in mind could be an application or tool that can:
 
-1. **Fetch and Parse RSS Feeds**: Your application should be able to fetch data from various RSS feeds and parse it into a usable format (e.g., a dataframe).
+1. **Fetch and Parse RSS Feeds**: Your application should be able to fetch data from various 
+RSS feeds and parse it into a usable format (e.g., a dataframe).
 
-2. **Analyze Content**: You might want your tool to analyze the content of the articles, such as counting keywords, sentiment analysis, or topic modeling.
+2. **Analyze Content**: You might want your tool to analyze the content of the articles, 
+such as counting keywords, sentiment analysis, or topic modeling.
 
-3. **Visualize Data**: Visualizing the data can help in understanding trends over time, popularity of certain topics, and more. This could include plots like timelines for when articles were published, word clouds showing popular terms, etc.
+3. **Visualize Data**: Visualizing the data can help in understanding trends over time, popularity
+of certain topics, and more. This could include plots like timelines for when articles were published, word clouds showing popular terms, etc.
 
-4. **Alert System**: Implementing an alert system that notifies you or others about new content based on specific criteria (e.g., keywords, categories) can be very useful.
+4. **Alert System**: Implementing an alert system that notifies you or others about new 
+content based on specific criteria (e.g., keywords, categories) can be very useful.
 
-5. **User Interface**: If your application is intended to interact with users directly, a user-friendly interface could make it more accessible and enjoyable to use.
+5. **User Interface**: If your application is intended to interact with users directly, a
+user-friendly interface could make it more accessible and enjoyable to use.
 
-6. **Integration Capabilities**: Your tool might need to integrate with other systems or services for additional functionality (e.g., storing data in a database, sending notifications via email).
+6. **Integration Capabilities**: Your tool might need to integrate with other systems or 
+services for additional functionality (e.g., storing data in a database, sending notifications via email).
 
-7. **Scalability**: Ensure that your application can handle multiple RSS feeds efficiently and scale as the number of users increases.
-- **Automated Research Feed** – Aggregate RSS feeds from academic journals, GIS updates, or AI blogs, then filter and categorize them for easy reference.
+7. **Scalability**: Ensure that your application can handle multiple RSS feeds efficiently 
+and scale as the number of users increases.
+- **Automated Research Feed** – Aggregate RSS feeds from academic journals, GIS updates, or 
+AI blogs, then filter and categorize them for easy reference.
 
-- **Data-Driven RSS Analytics** – Use R to track trends in RSS content, visualize publication frequency, and analyze metadata with `ggplot2` or `shiny`.
+- **Data-Driven RSS Analytics** – Use R to track trends in RSS content, visualize publication 
+frequency, and analyze metadata with `ggplot2` or `shiny`.
 
 - **Custom RSS Reader** – Build an interactive RSS dashboard using `tidyRSS` and `DT` to display articles in a structured format.
 
@@ -102,10 +111,13 @@ When exploring RSS technology with the R programming language, a nice end produc
   **RSS-Powered Database** – Store and categorize RSS feed data in a structured database (e.g., Microsoft Access or SQLite) for retrieval and analysis.
 
 
-By focusing on these aspects, you can create a comprehensive tool that not only fetches and parses RSS feeds but also provides valuable insights and functionality to its users.
+By focusing on these aspects, you can create a comprehensive tool that not only fetches and 
+parses RSS feeds but also provides valuable insights and functionality to its users.
 
 
 Absolutely! If you're exploring **RSS technology** with **R programming**, here are some compelling end products to aim for:
 
 
-If you're interested in building a **custom RSS reader**, [this guide](https://www.infoworld.com/article/2337738/how-to-create-your-own-rss-reader-with-r.html) walks through the process using R. 
+If you're interested in building a **custom RSS reader**, 
+[this guide](https://www.infoworld.com/article/2337738/how-to-create-your-own-rss-reader-with-r.html) walks through the process using R. 
+
