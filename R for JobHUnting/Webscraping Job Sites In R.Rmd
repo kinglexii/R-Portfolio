@@ -30,14 +30,11 @@ scraping the tables from the wikipedia page was taking too much time. plan B. cr
 
 the aim is to leverage the R world city database from the r maps package to pinpoint cities i would like to work in
 ```{r}
+
 researchuniversitiesUSA <- read_csv("C:/Users/lexii/Documents/GitHub/R-Portfolio/R for JobHUnting/researchuniversitiesUSA.csv")
 
 
 USAcities <- world.cities %>% as.data.frame() %>% filter(country.etc == "USA")
-
-
-
-
 
 ```
 
@@ -48,6 +45,8 @@ to get started webscraping i need the ur; of the page i want to scrape
 indeedjobs <- read_html("https://www.indeed.com/?from=gnav-jobsearch--indeedmobile")
 
 ```
+
+
 ```{r}
 
 largerthangr <- USAcities %>% filter(pop > USAcities$pop[name == "Grand Rapids"])
