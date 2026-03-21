@@ -14,6 +14,16 @@ By contributing to HIV research through open source software, MY INTENTION IS TO
 
 1. Bioinformatics analysis: Utilize publicly available datasets from sources like the National Center for Biotechnology Information (NCBI) or International HIV Sequence Database (IHSDB). You can perform bioinformatics analyses using open source software such as Python, R, or BioPython to analyze genomic data. This could involve identifying mutations, phylogenetic analysis, and drug resistance prediction.
 
+The Los Alamos HIV sequence database is a valuable resource for researchers studying the molecular epidemiology of human immunodeficiency virus (HIV) and simian immunodeficiency viruses (SIVs). 
+
+The tasks of this database include compiling and annotating sequences, tracking subtypes and circulating recombinant forms (CRFs), providing access to patient information, and maintaining full-length genome alignments. 
+
+To accomplish these goals, the Los Alamos HIV sequence database utilizes open source software such as Linux, Apache web server, Perl, Mason, and Sybase Adaptive Server Enterprise. 
+
+The database is updated biweekly with sequences from GenBank and annotated by the database staff based on criteria such as length of the sequence, whether it spans a complete gene, and its geographical origin. Annotations include subtyping information, sampling date, country of isolation, patient demographics, risk group or route of infection, epidemiological linkage to other patients in the database, and time and place of infection. 
+
+The Los Alamos HIV sequence database plays an important role in tracking the spread of HIV-1 and HIV-2 subtypes and CRFs for molecular epidemiology purposes and provides a valuable resource for researchers studying these viruses.
+
 ```{r}
 
 ```

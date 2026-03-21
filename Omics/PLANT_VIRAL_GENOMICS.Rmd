@@ -1,5 +1,5 @@
 ---
-title: "PLANT AND VIRAL GENOMICS ml"
+title: "PLANT AND VIRAL GENOMICS "
 author: "Alexandra Akaakar, BSc. MSc"
 date: "2024-11-25"
 output: html_document
@@ -13,3 +13,4 @@ PURPOSE:
 To identify and characterize plant genes involved in antiviral compound production.
 To investigate the regulatory networks controlling these gene expressions.
 To develop a machine learning-based predictive model for identifying effective plant-based biomolecules against specific viral infections.
+

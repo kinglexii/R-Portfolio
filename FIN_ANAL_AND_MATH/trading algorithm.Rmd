@@ -16,7 +16,7 @@ Step 1: Install Required Packages To create a trading algorithm in R, we need to
 
 ```{r}
 
-install.packages(c("quantmod", "tidyverse", "lubridate"))
+#install.packages(c("quantmod", "tidyverse", "lubridate"))
 library(quantmod)
 library(tidyverse)
 library(lubridate)
@@ -29,6 +29,9 @@ Step 2: Load Required Packages and Data Load the installed packages and import t
 ```{r}
 #Replace 'TICKER' with your desired stock ticker symbol
 getSymbols("TICKER", src = "yahoo", auto.assign = TRUE)
+
+getSymbols.yahooj()
+
 
 ```
 
