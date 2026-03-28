@@ -14,3 +14,29 @@ To identify and characterize plant genes involved in antiviral compound producti
 To investigate the regulatory networks controlling these gene expressions.
 To develop a machine learning-based predictive model for identifying effective plant-based biomolecules against specific viral infections.
 
+```{r}
+
+#install needed packages
+library(tidyverse)
+pacman::p_load("seqinr")
+
+```
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("Biostrings")
+
+```
+
+
+```{r}
+
+dna_sequences <- readDNAStringSet(file = "Z86099.2.fasta")
+
+
+#my_sequences <- read.fasta(file = "Z86099.2.fasta")
+
+
+```
+
